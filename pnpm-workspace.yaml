@@ -1,0 +1,3 @@
+packages:
+  - "apps/*"       # All apps, such as frontend and backend
+  - "packages/*"   # All shared libraries or utilities

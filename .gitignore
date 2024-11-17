@@ -1,0 +1,58 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+out/
+build/
+
+# Temporary files and folders
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Editor-specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# TypeScript
+*.tsbuildinfo
+
+# Environmental variables
+.env
+.env.local
+.env.test
+.env.production
+
+# pnpm lock file (optional if using a different lock strategy)
+pnpm-lock.yaml
+
+# Coverage directory (from testing tools like Jest)
+coverage/
+
+# Linting cache
+.eslintcache
+
+# Miscellaneous
+*.swp
+*.bak
+*.orig

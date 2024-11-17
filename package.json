@@ -1,0 +1,17 @@
+{
+  "name": "tomeforge",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "pnpm exec rimraf apps/backend/dist apps/frontend/dist packages/shared/dist",
+    "build": "pnpm -r exec tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

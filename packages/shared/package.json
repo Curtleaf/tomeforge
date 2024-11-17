@@ -1,0 +1,29 @@
+{
+  "name": "@tomeforge/shared",
+  "version": "0.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "files": [
+      "dist",
+      "package.json"
+    ]
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.0",
+    "typescript": "^5.4.5"
+  }
+}
