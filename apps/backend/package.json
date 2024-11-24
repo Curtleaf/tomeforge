@@ -11,8 +11,8 @@
     "start": "node dist/index.js",
     "test": "jest"
   },
-  "author": "Google LLC",
-  "license": "Apache-2.0",
+  "author": "CurtLeaf",
+  "license": "MIT",
   "dependencies": {
     "@tomeforge/shared": "workspace:^",
     "@types/express": "^4.17.21",

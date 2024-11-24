@@ -9,5 +9,6 @@
       "paths": {
         "@tomeforge/shared/*": ["packages/shared/dist/*"]
       }
-    }
+    },
+    "include": ["apps/*", "packages/*"]
   }  
