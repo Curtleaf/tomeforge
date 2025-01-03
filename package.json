@@ -13,5 +13,8 @@
   "license": "MIT",
   "devDependencies": {
     "rimraf": "^6.0.1"
+  },
+  "dependencies": {
+    "docsify-cli": "^4.4.4"
   }
 }

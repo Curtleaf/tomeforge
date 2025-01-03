@@ -4,7 +4,7 @@ Tomeforge is a monorepo project designed to power a robust tabletop game managem
 
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
-- ... (other sections)
+... (other sections)
 
 ## **Project Structure**
 
