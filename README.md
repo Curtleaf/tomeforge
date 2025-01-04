@@ -2,18 +2,18 @@
 
 Tomeforge is a monorepo project designed to power a robust tabletop game management platform. It includes a **frontend**, **backend**, and a **shared library** for reusable types, utilities, and UI components.
 
-- [Table of Contents](#table-of-contents)
-- [Introduction](#introduction)
-- ... (other sections)
+## Links
+
+* [Backend](https://curtleaf.github.io/tomeforge/apps/backend/ "This documentation covers all aspects of the backend, including database connectivity and system CRUD operations.")
 
 ## **Project Structure**
 
-``` plaintext
+```plaintext
 tomeforge/
 ├── apps/
 │   ├── backend/               # Backend application (Node.js, Express)
 │   ├── frontend/              # Frontend application (React, Vite)
-│   └── micro-frontends/       # Additional micro-frontends (optional)
+├── docs/
 ├── packages/
 │   ├── shared/                # Shared types, utilities, and reusable components
 │   └── ui/                    # Shared UI components (if applicable)
@@ -38,21 +38,21 @@ tomeforge/
 
 1. Clone the repository:
 
-``` bash
+```bash
 git clone <repository-url>
 cd tomeforge
 ```
 
 2. Install dependencies:
 
-``` bash
+```bash
 pnpm install
 ```
 
 3. Configure environment variables:
    - Create a `.env` file in the root directory of the backend for connection to mongoDB:
 
-``` dotenv
+```dotenv
 MONGODB_USERNAME=''
 MONGODB_PASSWORD=''
 MONGODB_CLUSTER=''
@@ -61,7 +61,7 @@ MONGODB_DATABASE_NAME=''
 
 4. Build all packages:
 
-``` bash
+```bash
 pnpm build
 ```
 
@@ -73,13 +73,13 @@ pnpm build
 
 1. Navigate to the `backend` directory:
 
-``` bash
+```bash
 cd apps/backend
 ```
 
 2. Start the backend in development mode:
 
-``` bash
+```bash
 pnpm run dev
 ```
 
@@ -89,13 +89,13 @@ pnpm run dev
 
 1. Navigate to the `frontend` directory:
 
-``` bash
+```bash
 cd apps/frontend
 ```
 
 2. Start the frontend development server:
 
-``` bash
+```bash
 pnpm run dev
 ```
 
@@ -129,7 +129,7 @@ pnpm run dev
 1. Add or modify features in the appropriate `apps` or `packages` directory.
 2. Use `pnpm` to run tests, linting, and builds across the monorepo:
 
-``` bash
+```bash
 pnpm test        # Run tests recursively
 pnpm lint        # Lint all packages and apps
 pnpm build       # Build all packages and apps
@@ -137,7 +137,7 @@ pnpm build       # Build all packages and apps
 
 3. Add a `changeset` when modifying shared packages to track versioning:
 
-``` bash
+```bash
 pnpm changeset
 ```
 
@@ -177,7 +177,7 @@ pnpm changeset
 - Run `pnpm install` to ensure all dependencies are installed.
 - Rebuild the shared library:
 
-``` bash
+```bash
 cd packages/shared
 pnpm build
 ```
@@ -193,13 +193,13 @@ pnpm build
 1. Fork the repository.
 2. Create a new branch for your feature:
 
-``` bash
+```bash
 git checkout -b feature-name
 ```
 
 3. Make changes and commit:
 
-``` bash
+```bash
 git commit -m "Add feature-name"
 ```
 
