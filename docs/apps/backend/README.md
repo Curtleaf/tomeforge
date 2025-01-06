@@ -8,12 +8,7 @@ Welcome to the backend documentation for TomeForge! This documentation covers al
 - MongoDB database integration via Mongoose.
 - Uses shared types from `@tomeforge/shared`.
 
-## Links
-
-* [System Module](apps/backend/system.md)
-* [bDatabase Module](apps/backend/db.md)
-
-## **How to Use**
+## [**Getting Started**](http://localhost:3000/#/?id=getting-started)
 
 1. **Navigate to the backend directory**:
 
@@ -45,3 +40,26 @@ Welcome to the backend documentation for TomeForge! This documentation covers al
    ```bash
    node dist/index.js
    ```
+
+## Modules
+
+The **Modules** section documents the core functionality provided by the backend of TomeForge. It includes detailed information about specific modules responsible for system management and database connectivity.
+
+### [System Module](apps/backend/system.md)
+
+The System Module handles all CRUD operations related to game systems. It allows developers to manage systems with features such as listing, creating, updating, and deleting system data. This module ensures that game systems are consistently structured and seamlessly integrated into the backend.
+
+ **Key Functions** :
+
+* **getAllSystems** : Retrieve all available systems.
+* **createSystem** : Add a new system with specified attributes.
+* **updateSystem** : Modify an existing system based on its ID.
+* **removeSystem** : Delete a system by ID.
+
+### [Database Module](apps/backend/db.md)
+
+The Database Module is responsible for establishing and managing the connection to the MongoDB database using Mongoose. It provides a central mechanism for initializing and maintaining database connectivity across the backend.
+
+ **Key Function** :
+
+* **connectToDatabase** : Connects the backend to MongoDB and ensures the database is ready for operations.

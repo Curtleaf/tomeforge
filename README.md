@@ -1,206 +1,180 @@
-# **Tomeforge**
+# TomeForge
 
-Tomeforge is a monorepo project designed to power a robust tabletop game management platform. It includes a **frontend**, **backend**, and a **shared library** for reusable types, utilities, and UI components.
+TomeForge is a powerful monorepo designed to streamline the creation and management of tabletop games. It encompasses a  **frontend** ,  **backend** , and a **shared library** to handle types, utilities, and UI components seamlessly.
 
-## Links
+---
 
-* [Backend](https://curtleaf.github.io/tomeforge/apps/backend/ "This documentation covers all aspects of the backend, including database connectivity and system CRUD operations.")
+## **Documentation**
+
+Comprehensive documentation for TomeForge is hosted [here](https://curtleaf.github.io/tomeforge/#/). Visit the link for detailed guidance on using and contributing to the project.
+
+---
+
+## **Table of Contents**
+
+* [About](#about)
+* [Project Structure](#project-structure)
+* [Getting Started](#getting-started)
+* [Usage](#usage)
+* [Features](#features)
+* [Contributing](#contributing)
+* [License](#license)
+
+---
+
+## **About**
+
+TomeForge integrates multiple applications and shared packages to provide a unified platform for managing tabletop game systems. Whether you’re a game designer or a player, TomeForge offers tools to customize, play, and manage games effectively.
+
+---
 
 ## **Project Structure**
 
 ```plaintext
+
 tomeforge/
 ├── apps/
-│   ├── backend/               # Backend application (Node.js, Express)
-│   ├── frontend/              # Frontend application (React, Vite)
-├── docs/
+│ ├── backend/ # Backend application (Node.js, Express)
+│ ├── frontend/ # Frontend application (React, Vite)
+├── docs/ # Documentation files for Docsify
 ├── packages/
-│   ├── shared/                # Shared types, utilities, and reusable components
-│   └── ui/                    # Shared UI components (if applicable)
-├── pnpm-workspace.yaml        # Monorepo workspace configuration
-├── tsconfig.json              # Root TypeScript configuration
-├── package.json               # Root package.json for shared scripts
-├── .env                       # Environment variables (shared across projects)
-└── .gitignore                 # Ignored files and directories
+│ ├── shared/ # Shared types, utilities, and reusable components
+│ └── ui/ # Shared UI components
+├── pnpm-workspace.yaml # Monorepo workspace configuration
+├── tsconfig.json # TypeScript configuration
+├── package.json # Shared scripts and dependencies
+└── .env # Environment variables
+
 ```
 
 ---
 
 ## **Getting Started**
 
-### **Prerequisites**
+### Prerequisites
 
-- Node.js v18 or higher (recommended to use `nvm` for version management)
-- `pnpm` (installed globally)
-- MongoDB Atlas account or local MongoDB instance for database
+* Node.js v18 or higher
+* `pnpm` (installed globally)
+* MongoDB Atlas or local MongoDB instance
 
-### **Setup**
+### Setup
 
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+
+git clone https://github.com/Curtleaf/tomeforge.git
 cd tomeforge
+
 ```
 
 2. Install dependencies:
 
 ```bash
+
 pnpm install
+
 ```
 
-3. Configure environment variables:
-   - Create a `.env` file in the root directory of the backend for connection to mongoDB:
+3. Configure `.env` for backend:
 
-```dotenv
+```bash
+
 MONGODB_USERNAME=''
 MONGODB_PASSWORD=''
 MONGODB_CLUSTER=''
 MONGODB_DATABASE_NAME=''
+
 ```
 
-4. Build all packages:
+4. Build the project:
 
 ```bash
+
 pnpm build
+
 ```
 
 ---
 
-## **Running the Project**
+## **Usage**
 
-### **Backend**
+### Backend
 
-1. Navigate to the `backend` directory:
+1. Navigate to the backend directory:
 
 ```bash
+
 cd apps/backend
+
 ```
 
 2. Start the backend in development mode:
 
 ```bash
+
 pnpm run dev
+
 ```
 
-3. The backend will start at the specified port (default: `3000`).
+### Frontend
 
-### **Frontend**
-
-1. Navigate to the `frontend` directory:
+1. Navigate to the frontend directory:
 
 ```bash
+
 cd apps/frontend
+
 ```
 
-2. Start the frontend development server:
+2. Start the development server:
 
 ```bash
+
 pnpm run dev
-```
 
-3. The frontend will be available at `http://localhost:5173`.
+```
 
 ---
 
-## **Project Features**
+## **Features**
 
-### **Frontend**
+### Frontend
 
-- Built with React and Vite for fast development.
-- Integrates shared UI components and types from the `shared` package.
+* React-based UI with Vite for fast builds.
+* Integrates shared components and types from `@tomeforge/shared`.
 
-### **Backend**
+### Backend
 
-- Node.js with Express for handling API requests.
-- MongoDB as the database, using Mongoose for schema modeling.
-- Consumes shared types from the `shared` package.
+* Node.js API with MongoDB (via Mongoose).
+* Shared types and utilities for seamless integration.
 
-### **Shared Library**
+### Shared Library
 
-- **Reusable Types**: Shared domain models like `User`, `System`, and `Character`.
-- **Utilities**: Common helper functions (e.g., date formatting).
-- **UI Components**: Shared React components like `SharedButton`.
-
----
-
-## **Development Workflow**
-
-1. Add or modify features in the appropriate `apps` or `packages` directory.
-2. Use `pnpm` to run tests, linting, and builds across the monorepo:
-
-```bash
-pnpm test        # Run tests recursively
-pnpm lint        # Lint all packages and apps
-pnpm build       # Build all packages and apps
-```
-
-3. Add a `changeset` when modifying shared packages to track versioning:
-
-```bash
-pnpm changeset
-```
-
-4. Commit changes and push to the repository.
-
----
-
-## **Scripts**
-
-### **Root Scripts**
-
-- `pnpm build`: Build all apps and packages.
-- `pnpm clean`: Remove all `dist` directories.
-- `pnpm test`: Run tests across the monorepo.
-
-### **Backend Scripts**
-
-- `pnpm run dev`: Start the backend in development mode.
-- `pnpm run build`: Build the backend for production.
-
-### **Frontend Scripts**
-
-- `pnpm run dev`: Start the frontend in development mode.
-- `pnpm run build`: Build the frontend for production.
-
----
-
-## **Common Issues**
-
-### 1. MongoDB Connection Error
-
-- Ensure `MONGO_URI` is correctly set in the `.env` file.
-- Verify your IP is whitelisted in MongoDB Atlas.
-
-### 2. Module Not Found Errors
-
-- Run `pnpm install` to ensure all dependencies are installed.
-- Rebuild the shared library:
-
-```bash
-cd packages/shared
-pnpm build
-```
-
-### 3. Frontend Fails to Load Shared Components
-
-- Check `@tomeforge/shared` is correctly linked in `apps/frontend/node_modules`.
+* Domain models (`System`, `Character`) and utility functions.
+* Reusable UI components for rapid development.
 
 ---
 
 ## **Contributing**
 
+We welcome contributions! Follow these steps:
+
 1. Fork the repository.
-2. Create a new branch for your feature:
+2. Create a feature branch:
 
 ```bash
+
 git checkout -b feature-name
+
 ```
 
-3. Make changes and commit:
+3. Commit changes:
 
 ```bash
+
 git commit -m "Add feature-name"
+
 ```
 
 4. Push to your fork and create a pull request.
@@ -209,6 +183,4 @@ git commit -m "Add feature-name"
 
 ## **License**
 
-This project is licensed under the MIT License.
-
----
+This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this software, provided you include the original copyright and license notice.

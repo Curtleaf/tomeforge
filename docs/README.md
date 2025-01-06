@@ -212,6 +212,4 @@ git commit -m "Add feature-name"
 
 ## **License**
 
-This project is licensed under the MIT License.
-
----
+This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this software, provided you include the original copyright and license notice.
