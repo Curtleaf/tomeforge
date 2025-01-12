@@ -6,13 +6,17 @@
   "scripts": {
     "clean": "pnpm exec rimraf apps/backend/dist apps/frontend/dist packages/shared/dist",
     "build": "pnpm -r exec tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-backend": "cd apps/backend && pnpm run dev",
+    "start-frontend": "cd apps/frontend && pnpm run dev",
+    "start": "concurrently \"pnpm start-backend\" \"pnpm start-frontend\""
   },
   "keywords": [],
   "author": "CurtLeaf",
   "license": "MIT",
   "devDependencies": {
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "concurrently": "^8.2.0"
   },
   "dependencies": {
     "docsify-cli": "^4.4.4"
