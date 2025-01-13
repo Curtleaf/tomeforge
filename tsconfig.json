@@ -1,14 +1,15 @@
 {
-    "compilerOptions": {
-      "target": "ES2020",
-      "module": "CommonJS",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "baseUrl": ".",
-      "paths": {
-        "@tomeforge/shared/*": ["packages/shared/dist/*"]
-      }
-    },
-    "include": ["apps/*", "packages/*"]
-  }  
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tomeforge/shared/*": ["packages/shared/dist/*"]
+    }
+  },
+  "include": ["apps/**/*", "packages/**/*"],
+  "exclude": ["docs"]
+}  
