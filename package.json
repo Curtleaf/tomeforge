@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "pnpm exec rimraf apps/backend/dist apps/frontend/dist packages/shared/dist",
     "build": "pnpm -r exec tsc",
+    "build-docs": "node sync-docs.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-backend": "cd apps/backend && pnpm run dev",
     "start-frontend": "cd apps/frontend && pnpm run dev",
@@ -15,8 +16,10 @@
   "author": "CurtLeaf",
   "license": "MIT",
   "devDependencies": {
-    "rimraf": "^6.0.1",
-    "concurrently": "^8.2.0"
+    "@types/fs-extra": "^11.0.4",
+    "concurrently": "^8.2.0",
+    "fs-extra": "^11.2.0",
+    "rimraf": "^6.0.1"
   },
   "dependencies": {
     "docsify-cli": "^4.4.4"
