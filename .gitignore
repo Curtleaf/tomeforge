@@ -1,58 +1,123 @@
-# Logs
+# TomeForge .gitignore - Comprehensive Monorepo Template
+
+# ============================================
+# DEPENDENCIES
+# ============================================
+node_modules/
+pnpm-lock.yaml
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# ============================================
+# BUILD OUTPUTS
+# ============================================
+out/
+dist/
+build/
+*.tsbuildinfo
+.cache/
+.parcel-cache/
+
+# ============================================
+# ENVIRONMENT & SECRETS
+# ============================================
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+*.p12
+*.pfx
+credentials/
+secrets/
+
+# ============================================
+# LOGS & DEBUGGING
+# ============================================
 logs
+logs/
 *.log
 npm-debug.log*
-pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Dependency directories
-node_modules/
-
-# Build outputs
-dist/
-out/
-build/
-
-# Temporary files and folders
-tmp/
-temp/
-*.tmp
-*.temp
-
-# Editor-specific files
-.vscode/
+# ============================================
+# IDE & EDITOR FILES
+# ============================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
 .idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ============================================
+# TESTING & COVERAGE
+# ============================================
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+fixtures/local/
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+playwright-report/
 
-# OS-generated files
-.DS_Store
-Thumbs.db
+# ============================================
+# TEMPORARY & SYSTEM FILES
+# ============================================
+tmp/
+temp/
+*.tmp
+*.temp
+.temp/
+.tmp/
+
+# ============================================
+# DATABASE & LOCAL DATA
+# ============================================
+*.sqlite
+*.db
+data/
+uploads/
 ehthumbs.db
 Desktop.ini
 
-# TypeScript
-*.tsbuildinfo
+# ============================================
+# DOCKER
+# ============================================
+docker-compose.override.yml
 
-# Environmental variables
-.env
-.env.local
-.env.test
-.env.production
+# ============================================
+# MONOREPO SPECIFIC
+# ============================================
+.turbo/
+.pnpm-store/
 
-# pnpm lock file (optional if using a different lock strategy)
-pnpm-lock.yaml
-
-# Coverage directory (from testing tools like Jest)
-coverage/
-
-# Linting cache
+# ============================================
+# LOCAL DEVELOPMENT (keep out of git)
+# ============================================
+# Personal notes and TODOs
+tasks/
+NOTES.md
+*_TODO.md
+scratch/
 .eslintcache
-
-# Miscellaneous
-*.swp
 *.bak
 *.orig

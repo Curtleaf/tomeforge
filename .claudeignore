@@ -1,0 +1,39 @@
+# TomeForge .claudeignore
+# Controls what Claude Code can access
+# Use this to override .gitignore for local development files
+
+# ============================================
+# ALLOW LOCAL DEVELOPMENT FILES (override gitignore)
+# ============================================
+# Make these visible to Claude Code despite being gitignored:
+!tasks/
+!NOTES.md
+!*_TODO.md
+!.vscode/settings.json
+!coverage/
+!docs/local/
+
+# ============================================
+# ADDITIONAL EXCLUSIONS (even if not in .gitignore)
+# ============================================
+# Block from Claude Code even if tracked by git:
+*.log
+temp/
+scratch/
+fixtures/
+
+# ============================================
+# SECURITY - NEVER EXPOSE TO AI
+# ============================================
+# These patterns are handled by global settings (see below)
+# but included here for project-specific documentation:
+.env*
+!.env.example
+*.pem
+*.key
+credentials/
+secrets/
+.aws/
+.ssh/
+docker-compose.yml
+**/database.yml

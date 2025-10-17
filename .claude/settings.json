@@ -1,0 +1,18 @@
+{
+  "iamPolicy": {
+    "read": [
+      "**/.env*",
+      "!**/.env.example",
+      "**/*.pem",
+      "**/*.key",
+      "**/secrets/**",
+      "**/credentials/**",
+      "**/.aws/**",
+      "**/.ssh/**",
+      "**/docker-compose.yml",
+      "**/database.yml",
+      "**/*.p12",
+      "**/*.pfx"
+    ]
+  }
+}
