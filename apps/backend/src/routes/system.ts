@@ -250,7 +250,7 @@ router.post('/systems', async (req, res) => {
  */
 router.put('/systems/:systemId', async (req, res) => {
   try {
-    const systemId = parseInt(req.params.systemId);
+    const systemId = req.params.systemId;
     const updatedSystem = await systemService.updateSystem(systemId, req.body);
     if (!updatedSystem) {
       return res.status(404).json({ error: 'System not found' });
@@ -299,7 +299,7 @@ router.put('/systems/:systemId', async (req, res) => {
  */
 router.delete('/systems/:systemId', async (req, res) => {
   try {
-    const systemId = parseInt(req.params.systemId);
+    const systemId = req.params.systemId;
     const deletedSystem = await systemService.removeSystem(systemId);
     if (!deletedSystem) {
       return res.status(404).json({ error: 'System not found' });

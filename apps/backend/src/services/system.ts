@@ -11,12 +11,12 @@ export const createSystem = async (systemData: SystemType): Promise<SystemType> 
   return systemRepository.addSystem(systemData);
 };
 
-export const updateSystem = async (systemId: number, updates: Partial<SystemType>): Promise<SystemType | null> => {
+export const updateSystem = async (systemId: string, updates: Partial<SystemType>): Promise<SystemType | null> => {
   // Perform any necessary validation or business logic before updating
   return systemRepository.modifySystem(systemId, updates);
 };
 
-export const removeSystem = async (systemId: number): Promise<boolean> => {
+export const removeSystem = async (systemId: string): Promise<boolean> => {
   // Perform any necessary validation or business logic before deleting
   return systemRepository.deleteSystem(systemId);
 };
