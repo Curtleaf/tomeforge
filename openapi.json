@@ -1,0 +1,605 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "TomeForge API",
+    "version": "1.0.0",
+    "description": "System-agnostic tabletop game management API. Note: Current implementation uses `/api/` paths. Migration to `/api/v1/` is planned for future versioning.",
+    "contact": {
+      "name": "TomeForge",
+      "url": "https://github.com/curtleaf/tomeforge"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1",
+      "description": "API v1 (upcoming migration from /api)"
+    },
+    {
+      "url": "/api",
+      "description": "Current API base path"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Authentication placeholder - not yet implemented. JWT-based authentication will be added in future releases."
+      }
+    },
+    "schemas": {
+      "SystemInput": {
+        "type": "object",
+        "required": [
+          "name",
+          "configuration",
+          "rules"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the game system",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the game system"
+          },
+          "version": {
+            "type": "string",
+            "description": "Version of the game system"
+          },
+          "author": {
+            "type": "string",
+            "description": "Author of the game system"
+          },
+          "configuration": {
+            "type": "object",
+            "required": [
+              "stats",
+              "skills"
+            ],
+            "properties": {
+              "stats": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "statId",
+                    "name",
+                    "dataType"
+                  ],
+                  "properties": {
+                    "statId": {
+                      "type": "number",
+                      "description": "Unique identifier for the stat"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the stat",
+                      "minLength": 1
+                    },
+                    "dataType": {
+                      "type": "string",
+                      "enum": [
+                        "number",
+                        "string"
+                      ],
+                      "description": "Data type of the stat value"
+                    },
+                    "order": {
+                      "type": "number",
+                      "description": "Display order (optional)"
+                    }
+                  }
+                },
+                "description": "Array of stat configurations"
+              },
+              "skills": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "skillId",
+                    "name",
+                    "dataType"
+                  ],
+                  "properties": {
+                    "skillId": {
+                      "type": "number",
+                      "description": "Unique identifier for the skill"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the skill",
+                      "minLength": 1
+                    },
+                    "dataType": {
+                      "type": "string",
+                      "enum": [
+                        "number",
+                        "string"
+                      ],
+                      "description": "Data type of the skill value"
+                    },
+                    "order": {
+                      "type": "number",
+                      "description": "Display order (optional)"
+                    }
+                  }
+                },
+                "description": "Array of skill configurations"
+              }
+            },
+            "description": "System configuration including stats and skills"
+          },
+          "rules": {
+            "type": "object",
+            "required": [
+              "diceRolling"
+            ],
+            "properties": {
+              "diceRolling": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "dice",
+                  "quantity"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Type of dice rolling system"
+                  },
+                  "dice": {
+                    "type": "number",
+                    "description": "Number of sides on the dice (e.g., 6 for d6, 20 for d20)"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "description": "Number of dice to roll"
+                  },
+                  "modifier": {
+                    "type": "number",
+                    "description": "Modifier to add to the roll (optional)"
+                  }
+                },
+                "description": "Dice rolling mechanics"
+              }
+            },
+            "description": "System rules and mechanics"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message describing what went wrong"
+          }
+        },
+        "additionalProperties": false
+      },
+      "System": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SystemInput"
+          },
+          {
+            "type": "object",
+            "required": [
+              "systemId",
+              "_id"
+            ],
+            "properties": {
+              "systemId": {
+                "type": "number",
+                "description": "Unique numeric identifier for the system"
+              },
+              "_id": {
+                "type": "string",
+                "description": "MongoDB document ID"
+              }
+            }
+          }
+        ],
+        "description": "Complete system object including auto-generated fields"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Systems",
+      "description": "Game system management endpoints"
+    }
+  ],
+  "paths": {
+    "/systems": {
+      "get": {
+        "summary": "Get all game systems",
+        "description": "Retrieves a list of all game systems in the database. Returns an array of system objects with their complete configuration and rules.",
+        "tags": [
+          "Systems"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of system objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/System"
+                  }
+                },
+                "example": [
+                  {
+                    "systemId": 1,
+                    "name": "Dungeons & Dragons 5e",
+                    "description": "Fifth edition D&D ruleset",
+                    "version": "5.0",
+                    "author": "Wizards of the Coast",
+                    "configuration": {
+                      "stats": [
+                        {
+                          "statId": 1,
+                          "name": "Strength",
+                          "dataType": "number",
+                          "order": 1
+                        },
+                        {
+                          "statId": 2,
+                          "name": "Dexterity",
+                          "dataType": "number",
+                          "order": 2
+                        }
+                      ],
+                      "skills": [
+                        {
+                          "skillId": 1,
+                          "name": "Athletics",
+                          "dataType": "number",
+                          "order": 1
+                        }
+                      ]
+                    },
+                    "rules": {
+                      "diceRolling": {
+                        "type": "d20",
+                        "dice": 20,
+                        "quantity": 1,
+                        "modifier": 0
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Database connection failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new game system",
+        "description": "Creates a new game system with configurations and rules. The system will be assigned a unique systemId automatically.",
+        "tags": [
+          "Systems"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SystemInput"
+              },
+              "example": {
+                "name": "Custom RPG System",
+                "description": "A homebrew tabletop system",
+                "version": "1.0",
+                "author": "John Doe",
+                "configuration": {
+                  "stats": [
+                    {
+                      "statId": 1,
+                      "name": "Power",
+                      "dataType": "number",
+                      "order": 1
+                    },
+                    {
+                      "statId": 2,
+                      "name": "Agility",
+                      "dataType": "number",
+                      "order": 2
+                    }
+                  ],
+                  "skills": [
+                    {
+                      "skillId": 1,
+                      "name": "Combat",
+                      "dataType": "number",
+                      "order": 1
+                    }
+                  ]
+                },
+                "rules": {
+                  "diceRolling": {
+                    "type": "d6",
+                    "dice": 6,
+                    "quantity": 2,
+                    "modifier": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "System created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/System"
+                },
+                "example": {
+                  "systemId": 2,
+                  "_id": "507f1f77bcf86cd799439011",
+                  "name": "Custom RPG System",
+                  "description": "A homebrew tabletop system",
+                  "version": "1.0",
+                  "author": "John Doe",
+                  "configuration": {
+                    "stats": [
+                      {
+                        "statId": 1,
+                        "name": "Power",
+                        "dataType": "number",
+                        "order": 1
+                      }
+                    ],
+                    "skills": [
+                      {
+                        "skillId": 1,
+                        "name": "Combat",
+                        "dataType": "number",
+                        "order": 1
+                      }
+                    ]
+                  },
+                  "rules": {
+                    "diceRolling": {
+                      "type": "d6",
+                      "dice": 6,
+                      "quantity": 2,
+                      "modifier": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Validation failed: name is required"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/systems/{systemId}": {
+      "put": {
+        "summary": "Update a game system",
+        "description": "Updates an existing game system by its numeric ID. All fields in the request body will overwrite existing values.",
+        "tags": [
+          "Systems"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "systemId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Numeric ID of the system to update",
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SystemInput"
+              },
+              "example": {
+                "name": "Updated System Name",
+                "description": "Updated description",
+                "version": "2.0",
+                "author": "Jane Smith",
+                "configuration": {
+                  "stats": [
+                    {
+                      "statId": 1,
+                      "name": "Strength",
+                      "dataType": "number",
+                      "order": 1
+                    }
+                  ],
+                  "skills": [
+                    {
+                      "skillId": 1,
+                      "name": "Athletics",
+                      "dataType": "number",
+                      "order": 1
+                    }
+                  ]
+                },
+                "rules": {
+                  "diceRolling": {
+                    "type": "d20",
+                    "dice": 20,
+                    "quantity": 1,
+                    "modifier": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "System updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/System"
+                },
+                "example": {
+                  "systemId": 1,
+                  "_id": "507f1f77bcf86cd799439011",
+                  "name": "Updated System Name",
+                  "description": "Updated description",
+                  "version": "2.0",
+                  "author": "Jane Smith",
+                  "configuration": {
+                    "stats": [
+                      {
+                        "statId": 1,
+                        "name": "Strength",
+                        "dataType": "number",
+                        "order": 1
+                      }
+                    ],
+                    "skills": [
+                      {
+                        "skillId": 1,
+                        "name": "Athletics",
+                        "dataType": "number",
+                        "order": 1
+                      }
+                    ]
+                  },
+                  "rules": {
+                    "diceRolling": {
+                      "type": "d20",
+                      "dice": 20,
+                      "quantity": 1,
+                      "modifier": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Validation failed: configuration is required"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "System not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "System not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a game system",
+        "description": "Permanently deletes a game system by its numeric ID. This operation cannot be undone.",
+        "tags": [
+          "Systems"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "systemId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Numeric ID of the system to delete",
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "System deleted successfully (no content)"
+          },
+          "404": {
+            "description": "System not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "System not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Database error occurred"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
