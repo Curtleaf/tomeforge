@@ -13,11 +13,14 @@ agent-os/
 │   ├── development-practices.md  # Development workflow and standards
 │   └── technical-constraints.md  # Performance, security, and data limits
 ├── standards/            # Coding standards and conventions (agent-os default)
+│   ├── _summaries/       # Quick reference summaries (read these first!)
 │   ├── global/           # Cross-cutting standards
 │   ├── backend/          # Backend-specific standards
 │   ├── frontend/         # Frontend-specific standards
 │   └── testing/          # Testing standards
-├── roles/                # Agent role definitions
+├── context/              # Context management for AI assistants
+│   └── project-map.md    # File locations and reference guide
+├── roles/                # Agent role definitions (future)
 └── config.yml            # Agent-OS configuration
 
 ```
@@ -76,6 +79,44 @@ Technical boundaries and performance targets:
 - **Scalability Thresholds**: When to introduce caching, microservices, event-driven architecture
 - **Enforcement**: Pre-commit hooks, CI/CD checks, runtime monitoring
 
+## Context Management (`context/`)
+
+**NEW:** Efficient context loading system for AI assistants to reduce token usage by 40-70%.
+
+### Project Map (`context/project-map.md`)
+- **Purpose**: Quick reference for file locations and common tasks
+- **Token Savings**: ~300 tokens (map) + specific files (~500-1000) vs reading everything (~3000-5000)
+- **Contains**:
+  - Project structure overview
+  - Key files by category
+  - Common task → file mappings
+  - Architecture layer diagram
+  - Cross-reference dependencies
+
+### Standards Summaries (`standards/_summaries/`)
+- **Purpose**: Quick reference summaries of full standards (~100 tokens each)
+- **Strategy**: Read summaries first, load full standards only when implementing
+- **Files**:
+  - `backend.md` - API, models, queries, architecture
+  - `frontend.md` - React, Vite, components, CSS, responsive, accessibility
+  - `testing.md` - Philosophy, coverage targets, frameworks
+  - `global.md` - Coding style, error handling, validation, conventions
+
+### Context Loading Strategy (For AI Assistants)
+
+**Efficient Loading (Recommended):**
+1. Read `context/project-map.md` (~300 tokens)
+2. Read relevant summary from `standards/_summaries/` (~100 tokens)
+3. Load only specific files needed for task (~500-1000 tokens)
+4. **Total**: ~900-1400 tokens
+
+**Old Approach (Inefficient):**
+1. Read all backend standards (~2000 tokens)
+2. Explore codebase to find files (~3000 tokens)
+3. **Total**: ~5000 tokens
+
+**Token Savings**: 72% reduction with new approach!
+
 ## How to Use This Documentation
 
 ### For Development Work
@@ -86,11 +127,28 @@ Technical boundaries and performance targets:
 5. **Product decisions**: Reference `mission.md` for alignment with vision
 
 ### For AI Assistants (Claude Code)
-The `CLAUDE.md` file in the repository root provides a summary of key information from these documents. AI assistants should:
-1. Reference `CLAUDE.md` for quick context
-2. Dive into specific `agent-os/product/` files for detailed guidance
-3. Follow schema constraints and testing requirements strictly
-4. Prioritize Phase 0 tasks before expanding features
+
+**Step 1: Always Read First**
+1. `context/project-map.md` - File locations and task mappings
+2. `CLAUDE.md` - Project overview from repository root
+
+**Step 2: Read Summaries (Only What's Needed)**
+3. Relevant summary from `standards/_summaries/`:
+   - Working on backend? Read `_summaries/backend.md`
+   - Working on frontend? Read `_summaries/frontend.md`
+   - Writing tests? Read `_summaries/testing.md`
+   - Need general context? Read `_summaries/global.md`
+
+**Step 3: Load Specific Files**
+4. Use project-map to locate exact files needed
+5. Read only those files
+
+**Best Practices:**
+- Load files **lazily**, not eagerly
+- Reference-based loading vs reading everything upfront
+- Use summaries to decide what full standards to load
+- Follow schema constraints and testing requirements strictly
+- Prioritize Phase 0 tasks before expanding features
 
 ### For Contributors
 1. Read `mission.md` to understand product vision
@@ -158,5 +216,5 @@ Before expanding features, complete Phase 0 developer infrastructure:
 
 ---
 
-**Last Updated**: 2025-10-17
-**Documentation Version**: 1.0.0
+**Last Updated**: 2025-10-18
+**Documentation Version**: 1.1.0 (Added context management system)
