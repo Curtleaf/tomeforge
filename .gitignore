@@ -37,6 +37,7 @@ docs/openapi.json
 .env.*
 !.env.example
 !.env.template
+!.env.docker.example
 *.pem
 *.key
 *.p12
@@ -128,3 +129,45 @@ scratch/
 .eslintcache
 *.bak
 *.orig
+
+# ============================================
+# AI & CLAUDE CODE
+# ============================================
+# Local Claude settings (personal/machine-specific)
+.claude/settings.local.json
+.claude/**/*.local.json
+
+# Claude session data and logs
+.claude/sessions/
+.claude/logs/
+.claude/.cache/
+
+# AI chat transcripts and scratch work
+.ai-transcripts/
+.ai-scratch/
+*.ai-chat.md
+
+# Cursor/other AI IDEs (if used in future)
+.cursor/settings.local.json
+.cursor/sessions/
+
+# ============================================
+# AGENT-OS WORKING FILES
+# ============================================
+# Detailed implementation/verification logs (keep only spec.md and tasks.md)
+agent-os/specs/*/implementation/
+agent-os/specs/*/verification/
+agent-os/specs/*/planning/initialization.md
+agent-os/specs/*/planning/task-assignments.yml
+
+# Archive directory for completed spec artifacts
+agent-os/specs/archive/
+
+# Temporary agent work files
+agent-os/.tmp/
+agent-os/scratch/
+
+# Personal developer notes
+agent-os/personal/
+agent-os/**/*.personal.md
+agent-os/**/*_PRIVATE.md

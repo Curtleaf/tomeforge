@@ -1,0 +1,118 @@
+# TomeForge Docker Compose Configuration
+# Development environment infrastructure for local development
+#
+# Services:
+#   - mongodb: MongoDB 7.0 database with initialization scripts
+#   - mongo-express: Web-based MongoDB admin UI
+#   - redis: (Commented) Future caching and session storage
+#
+# Quick Start:
+#   1. Copy .env.docker.example to .env.docker
+#   2. Run: docker compose up -d
+#   3. Access mongo-express at http://localhost:8081
+
+# Custom network for service-to-service communication
+networks:
+  tomeforge-network:
+    driver: bridge
+    name: tomeforge-network
+
+# Named volumes for persistent data storage
+volumes:
+  tomeforge-mongodb-data:
+    name: tomeforge-mongodb-data
+
+  tomeforge-redis-data:
+    name: tomeforge-redis-data
+
+services:
+  # MongoDB 7.0 - Primary database
+  # Accessible from host at localhost:27017 for GUI tools
+  # Accessible from Docker network at mongodb:27017 for containerized apps
+  mongodb:
+    image: mongo:7.0
+    container_name: tomeforge-mongodb
+    restart: unless-stopped
+
+    # Load all environment variables from .env.docker file
+    env_file:
+      - .env.docker
+
+    # Port binding: localhost only for security
+    ports:
+      - "127.0.0.1:27017:27017"
+
+    # Volume mounts
+    volumes:
+      - tomeforge-mongodb-data:/data/db
+      - ./docker/mongo-init:/docker-entrypoint-initdb.d:ro
+
+    # Health check ensures MongoDB is ready before dependent services start
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    networks:
+      - tomeforge-network
+
+  # mongo-express - Web-based MongoDB admin UI
+  # Accessible at http://localhost:8081 (requires basic authentication)
+  mongo-express:
+    image: mongo-express:latest
+    container_name: tomeforge-mongo-express
+    restart: unless-stopped
+
+    # Load environment variables from .env.docker file
+    env_file:
+      - .env.docker
+
+    # Port binding for web UI (localhost only for consistency)
+    ports:
+      - "127.0.0.1:8081:8081"
+
+    # Wait for MongoDB to be healthy before starting
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+    # Override specific environment variables for mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_PORT: 27017
+
+    networks:
+      - tomeforge-network
+
+  # Redis - Future caching and session storage (COMMENTED OUT)
+  # TODO: Uncomment when implementing caching, session storage, or WebSocket scaling
+  #
+  # To enable Redis:
+  #   1. Uncomment the service definition below
+  #   2. Run: docker compose up -d redis
+  #   3. Update backend .env with REDIS_URI=redis://localhost:6379
+  #
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: tomeforge-redis
+  #   restart: unless-stopped
+  #
+  #   env_file:
+  #     - .env.docker
+  #
+  #   ports:
+  #     - "127.0.0.1:6379:6379"
+  #
+  #   volumes:
+  #     - tomeforge-redis-data:/data
+  #
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #
+  #   networks:
+  #     - tomeforge-network
