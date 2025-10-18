@@ -20,6 +20,12 @@ agent-os/
 │   └── testing/          # Testing standards
 ├── context/              # Context management for AI assistants
 │   └── project-map.md    # File locations and reference guide
+├── decisions/            # Architecture Decision Records (ADRs)
+│   ├── README.md         # ADR process and guidelines
+│   ├── 000-template.md   # Template for new ADRs
+│   ├── 001-mongodb-over-postgresql.md
+│   ├── 002-pnpm-monorepo.md
+│   └── 003-docker-local-development.md
 ├── roles/                # Agent role definitions (future)
 └── config.yml            # Agent-OS configuration
 
@@ -117,6 +123,62 @@ Technical boundaries and performance targets:
 
 **Token Savings**: 72% reduction with new approach!
 
+## Architecture Decision Records (`decisions/`)
+
+**NEW:** Documented architectural and technical decisions for project "memory."
+
+### Purpose
+ADRs serve as the project's architectural memory, documenting:
+- **Why** technical choices were made
+- **What** alternatives were considered
+- **What** trade-offs were accepted
+- **How** decisions impact the codebase
+
+This is critical for:
+- Solo developers returning after breaks (you!)
+- AI assistants understanding context
+- Future contributors onboarding
+- Avoiding "why did we do it this way?" questions
+
+### Current ADRs
+1. **[ADR-001: MongoDB over PostgreSQL](./decisions/001-mongodb-over-postgresql.md)**
+   - Decision: Use MongoDB with Mongoose for flexible, system-agnostic data modeling
+   - Why: Document storage better fits variable game system configurations than rigid relational schema
+
+2. **[ADR-002: pnpm Monorepo Structure](./decisions/002-pnpm-monorepo.md)**
+   - Decision: Use pnpm workspaces with apps/ and packages/ structure
+   - Why: Fast iteration with shared types, atomic commits across frontend/backend/shared
+
+3. **[ADR-003: Docker for Local Development](./decisions/003-docker-local-development.md)**
+   - Decision: Containerize infrastructure (MongoDB, Redis), keep apps on host
+   - Why: Reproducible environments with fast hot-reloading iteration
+
+### When to Create an ADR
+Create ADRs for:
+- Technology stack choices (database, framework, libraries)
+- Architectural patterns (monorepo, layered architecture, microservices)
+- Infrastructure decisions (Docker, deployment, CI/CD)
+- Data modeling approaches
+- Security and authentication strategies
+
+**Don't create ADRs for:**
+- Minor code style preferences (use linters)
+- Routine bug fixes
+- Simple feature implementations
+- Temporary workarounds
+
+### Creating New ADRs
+```bash
+# 1. Copy template
+cp agent-os/decisions/000-template.md agent-os/decisions/004-your-decision.md
+
+# 2. Fill out sections (Context, Decision, Alternatives, Consequences)
+
+# 3. Update decisions/README.md index
+```
+
+See `agent-os/decisions/README.md` for detailed ADR process and best practices.
+
 ## How to Use This Documentation
 
 ### For Development Work
@@ -131,17 +193,18 @@ Technical boundaries and performance targets:
 **Step 1: Always Read First**
 1. `context/project-map.md` - File locations and task mappings
 2. `CLAUDE.md` - Project overview from repository root
+3. Relevant ADRs from `decisions/` - Understand why decisions were made
 
 **Step 2: Read Summaries (Only What's Needed)**
-3. Relevant summary from `standards/_summaries/`:
+4. Relevant summary from `standards/_summaries/`:
    - Working on backend? Read `_summaries/backend.md`
    - Working on frontend? Read `_summaries/frontend.md`
    - Writing tests? Read `_summaries/testing.md`
    - Need general context? Read `_summaries/global.md`
 
 **Step 3: Load Specific Files**
-4. Use project-map to locate exact files needed
-5. Read only those files
+5. Use project-map to locate exact files needed
+6. Read only those files
 
 **Best Practices:**
 - Load files **lazily**, not eagerly
@@ -217,4 +280,4 @@ Before expanding features, complete Phase 0 developer infrastructure:
 ---
 
 **Last Updated**: 2025-10-18
-**Documentation Version**: 1.1.0 (Added context management system)
+**Documentation Version**: 1.2.0 (Added context management + ADR system)
