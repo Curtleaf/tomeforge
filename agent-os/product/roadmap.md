@@ -8,15 +8,9 @@
 
 **Code Review (2025-01-17):** See `agent-os/product/code-review-2025-01-17.md` for detailed findings
 
-### Critical Bug Fixes (P0 - BLOCKING)
-1. [ ] Fix Database Query Bugs — Correct `findByIdAndUpdate` to use `findOneAndUpdate` with numeric systemId in modifySystem and deleteSystem (apps/backend/src/data-access/system.ts) `XS`
-2. [ ] Input Validation Middleware — Add request validation using zod/joi for all POST/PUT endpoints to prevent invalid data (apps/backend/src/routes/system.ts) `S`
-3. [ ] Error Handling Standardization — Implement proper HTTP status codes (400/404/409/500) and error response structure across all endpoints `XS`
-4. [ ] Secure Connection String Handling — Add URL encoding for database credentials and redact sensitive info from error logs (apps/backend/src/utils/db/db.ts) `XS`
-
 ### Documentation & Standards
 5. [x] API Documentation Setup — Configure Swagger/OpenAPI for automatic API documentation generation from code `XS`
-6. [ ] TypeDoc Configuration — Set up TypeDoc for auto-generating documentation from TypeScript types and JSDoc comments `XS`
+6. [x] TypeDoc Configuration — Set up TypeDoc for auto-generating documentation from TypeScript types and JSDoc comments `XS`
 7. [ ] Architecture Decision Records — Create ADR template and document initial architecture decisions `XS`
 
 ### Testing Infrastructure
@@ -30,6 +24,12 @@
 13. [ ] GitHub Actions Workflow — Expand CI/CD to run tests, type checking, and linting on all PRs `S`
 14. [ ] Pre-commit Hooks — Configure husky with pre-commit hooks for type checking, linting, and running tests `XS`
 15. [ ] Build Automation — Ensure consistent builds across development and production environments `S`
+
+### Critical Bug Fixes (P0 - BLOCKING)
+1. [ ] Fix Database Query Bugs — Correct `findByIdAndUpdate` to use `findOneAndUpdate` with numeric systemId in modifySystem and deleteSystem (apps/backend/src/data-access/system.ts) `XS`
+2. [ ] Input Validation Middleware — Add request validation using zod/joi for all POST/PUT endpoints to prevent invalid data (apps/backend/src/routes/system.ts) `S`
+3. [ ] Error Handling Standardization — Implement proper HTTP status codes (400/404/409/500) and error response structure across all endpoints `XS`
+4. [ ] Secure Connection String Handling — Add URL encoding for database credentials and redact sensitive info from error logs (apps/backend/src/utils/db/db.ts) `XS`
 
 ### Schema Validation & Quality
 16. [ ] Database Indexes — Add unique index on systemId, standard indexes on name fields for all models (packages/shared/src/models/) `XS`

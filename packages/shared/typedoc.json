@@ -1,0 +1,17 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "out": "docs",
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "**/node_modules/**",
+    "**/dist/**"
+  ],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "includeVersion": true,
+  "readme": "none",
+  "plugin": ["typedoc-plugin-markdown"],
+  "publicPath": "/packages/shared/"
+}

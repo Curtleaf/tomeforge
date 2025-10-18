@@ -9,7 +9,8 @@
     "build-api-spec": "node scripts/generate-openapi.js",
     "build-api-docs": "pnpm build-api-schemas && pnpm build-api-spec",
     "build": "pnpm -r exec tsc && pnpm build-api-spec",
-    "build-docs": "pnpm build-api-spec && node sync-docs.js",
+    "build-typedoc": "cd packages/shared && pnpm exec typedoc",
+    "build-docs": "pnpm build-api-spec && pnpm build-typedoc && node sync-docs.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-backend": "cd apps/backend && pnpm run dev",
     "start-frontend": "cd apps/frontend && pnpm run dev",
@@ -20,10 +21,14 @@
   "license": "MIT",
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
+    "@types/js-yaml": "^4.0.9",
     "concurrently": "^8.2.0",
     "fs-extra": "^11.2.0",
+    "js-yaml": "^4.1.0",
     "rimraf": "^6.0.1",
     "swagger-jsdoc": "^6.2.8",
+    "typedoc": "^0.28.14",
+    "typedoc-plugin-markdown": "^4.9.0",
     "typescript-json-schema": "^0.65.1"
   },
   "dependencies": {

@@ -1,5 +1,9 @@
 import { Schema, model, InferSchemaType } from "mongoose";
 
+/**
+ * Schema defining the configuration structure for game systems.
+ * Includes stats and skills with their data types and ordering.
+ */
 const configurationsSchema = new Schema({
     stats: [
         {
@@ -20,6 +24,10 @@ const configurationsSchema = new Schema({
     // ... other configurations
 });
 
+/**
+ * Schema defining the rules for game systems.
+ * Includes dice rolling mechanics and other game-specific rules.
+ */
 const rulesSchema = new Schema({
     diceRolling: {
         type: {
@@ -33,6 +41,10 @@ const rulesSchema = new Schema({
     // ... other rules
 });
 
+/**
+ * Schema for a tabletop game system.
+ * Defines the structure for system metadata, configuration, and rules.
+ */
 const systemSchema = new Schema({
     systemId: { type: Number, required: true },
     name: { type: String, required: true },
@@ -44,8 +56,15 @@ const systemSchema = new Schema({
     // ... other metadata
 });
 
+/**
+ * TypeScript type inferred from the system schema.
+ */
 type SystemType = InferSchemaType<typeof systemSchema>;
 
+/**
+ * Mongoose model for tabletop game systems.
+ * Represents a game system with configuration and rules.
+ */
 const SystemModel = model<SystemType>('System', systemSchema);
 
 export { SystemModel, SystemType, systemSchema };

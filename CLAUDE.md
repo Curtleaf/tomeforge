@@ -37,10 +37,69 @@ cd apps/frontend && pnpm run dev
 ```
 
 ### Documentation
+
+#### Building Documentation
 ```bash
-pnpm build-docs                 # Sync docs from apps/*/docs to central docs/ folder
+pnpm build-docs                 # Build all documentation (OpenAPI + TypeDoc) and sync to docs/
+pnpm build-api-spec             # Generate OpenAPI specification only
+pnpm build-typedoc              # Generate TypeDoc API reference only
 docsify serve docs              # Serve documentation locally
 ```
+
+The `build-docs` command runs a complete documentation build:
+1. Generates OpenAPI specification from backend routes
+2. Generates TypeDoc API reference from shared package
+3. Syncs all documentation to central `docs/` folder for deployment
+
+#### TypeDoc API Reference
+
+TypeDoc automatically generates API reference documentation from TypeScript source code and JSDoc comments in the shared package.
+
+**Generated Documentation:**
+- Location: `docs/packages/shared/` (after running `pnpm build-docs`)
+- Source: `packages/shared/src/` (TypeScript source files)
+- Configuration: `packages/shared/typedoc.json`
+
+**Adding JSDoc Comments:**
+When adding new exports to the shared package, include JSDoc comments for documentation:
+
+```typescript
+/**
+ * Represents a tabletop game system with configuration and rules.
+ * This model stores stats, skills, and dice rolling mechanics.
+ */
+export const SystemModel = model<SystemType>('System', systemSchema);
+
+/**
+ * Validates character data against system configuration.
+ * @param data - Character data to validate
+ * @param config - System configuration to validate against
+ * @returns true if valid, false otherwise
+ */
+export function validateCharacterData(data: CharacterDataObject, config: SystemConfiguration): boolean {
+  // Implementation
+}
+```
+
+**Best Practices for JSDoc:**
+- Keep comments concise and evergreen (focus on "what" not "how")
+- Document all exported types, interfaces, functions, and classes
+- Use `@param` and `@returns` tags for functions
+- Avoid redundant comments that restate the code
+- See `agent-os/standards/global/commenting.md` for full guidelines
+
+**Extending TypeDoc to Other Packages:**
+To add TypeDoc to backend or frontend packages in the future:
+1. Create `typedoc.json` in the package root
+2. Add `build-typedoc-[package]` script to root `package.json`
+3. Update `build-docs` script to include new TypeDoc generation step
+4. Ensure package has a `docs/` output directory for sync-docs.js
+
+**Troubleshooting TypeDoc Issues:**
+- **Build fails:** Check `packages/shared/typedoc.json` for syntax errors
+- **Missing types:** Ensure exports are in `packages/shared/src/index.ts`
+- **No documentation:** Add JSDoc comments to exported members
+- **Slow builds:** TypeDoc should complete in under 30 seconds; check for large files or circular dependencies
 
 ## Docker Development Environment
 
