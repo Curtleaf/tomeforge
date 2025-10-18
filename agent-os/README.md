@@ -26,7 +26,15 @@ agent-os/
 │   ├── 001-mongodb-over-postgresql.md
 │   ├── 002-pnpm-monorepo.md
 │   └── 003-docker-local-development.md
-├── roles/                # Agent role definitions (future)
+├── roles/                # Claude Code subagent role definitions
+│   ├── README.md         # Subagent system overview and best practices
+│   ├── spec-writer.md    # Creates detailed specifications from requirements
+│   ├── code-reviewer.md  # Adversarial quality assurance
+│   ├── test-generator.md # Writes comprehensive test suites
+│   ├── db-migrator.md    # Handles database schema migrations
+│   └── doc-writer.md     # Updates project documentation
+├── workflows/            # Subagent chaining patterns
+│   └── subagent-chaining-patterns.md  # Proven workflows for common tasks
 └── config.yml            # Agent-OS configuration
 
 ```
@@ -179,6 +187,116 @@ cp agent-os/decisions/000-template.md agent-os/decisions/004-your-decision.md
 
 See `agent-os/decisions/README.md` for detailed ADR process and best practices.
 
+## Subagent Roles (`roles/`)
+
+**NEW:** Specialized Claude Code subagent patterns for efficient, high-quality development.
+
+### Purpose
+Subagents are specialized AI agents that focus on one task and do it exceptionally well. Research shows multi-agent systems achieve **40% improvement in code quality** compared to single-agent approaches through:
+
+- **Specialized Expertise**: Each agent masters one domain
+- **Context Preservation**: No token dilution from trying to do everything
+- **Parallel Execution**: Independent tasks run simultaneously
+- **Quality Isolation**: High output quality through focused context
+- **Adversarial Review**: Reviewer agents catch what generator agents miss
+
+### Available Subagent Roles
+
+1. **[spec-writer](./roles/spec-writer.md)** - Requirements → Detailed Specifications
+   - When: Before implementing features
+   - Input: Feature idea, user stories
+   - Output: Comprehensive spec with acceptance criteria
+
+2. **[code-reviewer](./roles/code-reviewer.md)** - Adversarial Quality Assurance
+   - When: After implementing features, before commits
+   - Input: Code changes (git diff)
+   - Output: Prioritized issues (P0/P1/P2) with fixes
+
+3. **[test-generator](./roles/test-generator.md)** - Comprehensive Test Suites
+   - When: TDD workflows, increasing coverage
+   - Input: Spec or code to test
+   - Output: Unit, integration, E2E tests
+
+4. **[db-migrator](./roles/db-migrator.md)** - Database Schema Migrations
+   - When: Modifying Mongoose models
+   - Input: Schema changes
+   - Output: Migration scripts with rollback plans
+
+5. **[doc-writer](./roles/doc-writer.md)** - Documentation Updates
+   - When: After features, API changes, decisions
+   - Input: Code changes
+   - Output: Updated CLAUDE.md, JSDoc, ADRs
+
+### Common Workflows
+
+**Feature Development (TDD):**
+```
+1. spec-writer   → Creates specification
+2. test-generator → Writes tests from spec
+3. [Main Agent]   → Implements to pass tests
+4. code-reviewer  → Verifies quality
+5. doc-writer     → Updates documentation
+```
+
+**Bug Fix with Regression Prevention:**
+```
+1. [Main Agent]   → Fixes bug
+2. test-generator → Writes regression tests
+3. code-reviewer  → Verifies fix + tests
+```
+
+**Schema Migration:**
+```
+1. [Main Agent]  → Modifies schema
+2. db-migrator   → Creates migration scripts
+3. test-generator → Tests migration
+4. code-reviewer → Verifies safety
+5. doc-writer    → Updates docs
+```
+
+See `agent-os/workflows/subagent-chaining-patterns.md` for detailed workflow examples.
+
+### Quick Start
+
+**Basic Invocation:**
+```
+Use the [role-name] subagent to [specific task].
+
+Context:
+- [Relevant files or specs]
+- [Standards to follow]
+- [Success criteria]
+```
+
+**Example:**
+```
+Use the code-reviewer subagent to review git diff.
+
+Focus on:
+- Standards compliance (agent-os/standards/_summaries/backend.md)
+- Schema complexity (agent-os/product/technical-constraints.md)
+- Error handling patterns
+
+Report P0 (critical), P1 (major), P2 (minor) issues.
+```
+
+### Best Practices
+
+✅ **Do:**
+- Provide ONLY the context needed for the task
+- Give clear success criteria
+- Reference specific standards/files
+- Chain subagents for complex workflows
+- Run independent subagents in parallel
+
+❌ **Don't:**
+- Give entire codebase as context
+- Ask one subagent to do multiple unrelated tasks
+- Skip verification steps (code-reviewer)
+- Provide vague instructions
+
+See `agent-os/roles/README.md` for comprehensive subagent documentation.
+
 ## How to Use This Documentation
 
 ### For Development Work
@@ -280,4 +398,4 @@ Before expanding features, complete Phase 0 developer infrastructure:
 ---
 
 **Last Updated**: 2025-10-18
-**Documentation Version**: 1.2.0 (Added context management + ADR system)
+**Documentation Version**: 1.3.0 (Added context management + ADR system + Subagent roles)
