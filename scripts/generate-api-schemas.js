@@ -10,10 +10,11 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const { exec } = require('child_process');
+const { exec, execFile } = require('child_process');
 const { promisify } = require('util');
 
 const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 async function generateSchemas() {
   try {
@@ -35,9 +36,19 @@ async function generateSchemas() {
     const tsConfigPath = path.join(sharedPath, 'tsconfig.json');
     const schemaPath = path.join(sharedPath, 'src/models/system.ts');
 
-    const command = `npx typescript-json-schema ${tsConfigPath} SystemType --out ${outputPath} --required --noExtraProps --strictNullChecks --include ${schemaPath}`;
-
-    await execAsync(command);
+    const tjsCmd = 'npx';
+    const tjsArgs = [
+      'typescript-json-schema',
+      tsConfigPath,
+      'SystemType',
+      '--out', outputPath,
+      '--required',
+      '--noExtraProps',
+      '--strictNullChecks',
+      '--include', schemaPath
+    ];
+    
+    await execFileAsync(tjsCmd, tjsArgs);
 
     console.log(`Schemas generated successfully at: ${outputPath}`);
 
