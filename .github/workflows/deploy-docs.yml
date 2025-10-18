@@ -15,10 +15,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - name: Install Dependencies
-      run: npm install
-    - name: Sync Documentation
-      run: npm run build-docs
+      run: pnpm install
+    - name: Build Documentation
+      run: pnpm build-docs
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
