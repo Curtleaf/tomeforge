@@ -24,6 +24,13 @@ build/
 .parcel-cache/
 
 # ============================================
+# GENERATED API DOCUMENTATION
+# ============================================
+apps/backend/src/generated/
+apps/backend/openapi.json
+docs/openapi.json
+
+# ============================================
 # ENVIRONMENT & SECRETS
 # ============================================
 .env

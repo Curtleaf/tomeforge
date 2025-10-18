@@ -4,7 +4,15 @@
       "Bash(cat:*)",
       "Read(//home/curtleaf/agent-os/profiles/default/standards/**)",
       "Read(//home/curtleaf/agent-os/**)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm build-api-spec:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm -r exec tsc:*)",
+      "Bash(pnpm test:*)",
+      "Bash(time pnpm build-api-spec:*)",
+      "WebFetch(domain:validator.swagger.io)",
+      "Bash(node -e:*)"
     ],
     "deny": [],
     "ask": []

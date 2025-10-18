@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "clean": "pnpm exec rimraf apps/backend/dist apps/frontend/dist packages/shared/dist",
-    "build": "pnpm -r exec tsc",
-    "build-docs": "node sync-docs.js",
+    "build-api-schemas": "node scripts/generate-api-schemas.js",
+    "build-api-spec": "node scripts/generate-openapi.js",
+    "build-api-docs": "pnpm build-api-schemas && pnpm build-api-spec",
+    "build": "pnpm -r exec tsc && pnpm build-api-spec",
+    "build-docs": "pnpm build-api-spec && node sync-docs.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-backend": "cd apps/backend && pnpm run dev",
     "start-frontend": "cd apps/frontend && pnpm run dev",
@@ -19,7 +22,9 @@
     "@types/fs-extra": "^11.0.4",
     "concurrently": "^8.2.0",
     "fs-extra": "^11.2.0",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "swagger-jsdoc": "^6.2.8",
+    "typescript-json-schema": "^0.65.1"
   },
   "dependencies": {
     "docsify-cli": "^4.4.4"

@@ -1,0 +1,15 @@
+task_assignments:
+  - task_group: "Task Group 1: Swagger Configuration Setup"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 2: TypeScript to JSON Schema Conversion"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 3: JSDoc Annotations for /api/systems Endpoints"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 4: Documentation Hosting Setup"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 5: Test Review & Final Validation"
+    assigned_subagent: "testing-engineer"
